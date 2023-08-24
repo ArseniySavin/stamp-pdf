@@ -17,10 +17,10 @@ jobs:
         go-version: '1.20'
     - name: go build linux
       run: |
-        GOOS=linux GOARCH=amd64 go build -o ./linux/stamp-pdf main.go
+        GOOS=linux GOARCH=amd64 go build -o ./linux/stamp-pdf cmd/cli/main.go
     - name: go build windows
       run: |
-        GOOS=windows GOARCH=amd64 go build -o ./win/stamp-pdf.exe main.go
+        GOOS=windows GOARCH=amd64 go build -o ./win/stamp-pdf.exe cmd/cli/main.go
     - name: zip linux artifact
       run: |
         ls -al
