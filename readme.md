@@ -4,7 +4,7 @@ The application is setting watermark stamp using the png file.
 
 ### Commands
 
-```
+```bash
 stamp
 stamp-init
 help

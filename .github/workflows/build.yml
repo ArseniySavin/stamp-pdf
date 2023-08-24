@@ -1,0 +1,80 @@
+name: Build release CI
+
+on:
+  push:
+  #   branches: [ "main" ]
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.20'
+    - name: go build linux
+      run: |
+        GOOS=linux GOARCH=amd64 go build -o ./linux/stamp-pdf main.go
+    - name: go build windows
+      run: |
+        GOOS=windows GOARCH=amd64 go build -o ./win/stamp-pdf.exe main.go
+    - name: zip linux artifact
+      run: |
+        ls -al
+        cp stamp.ttf ./linux/
+        cp stamp.ttf ./win/
+        zip -r linux.zip ./linux
+        zip -r windows.zip ./win
+    - name: upload linux artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: uploads
+        path: linux.zip
+    - name: upload windows artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: uploads
+        path: windows.zip
+
+  upload-release:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+    - uses: actions/checkout@v1
+    - name: create release
+      id: create_release
+      uses: actions/create-release@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+    - name: download artifacts
+      uses: actions/download-artifact@v1
+      with:
+        name: uploads
+    - name: upload linux
+      id: upload-linux
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./uploads/linux.zip
+        asset_name: linux.zip
+        asset_content_type: application/zip
+    - name: upload windows
+      id: upload-windows
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./uploads/windows.zip
+        asset_name: windows.zip
+        asset_content_type: application/zip
