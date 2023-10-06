@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"pdf-staml/pkg"
+	"stamp-pdf/pkg"
 	"time"
 
 	"github.com/spf13/cobra"

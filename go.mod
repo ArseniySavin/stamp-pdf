@@ -1,4 +1,4 @@
-module pdf-staml
+module stamp-pdf
 
 go 1.20
 

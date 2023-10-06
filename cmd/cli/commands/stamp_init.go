@@ -2,7 +2,8 @@ package commands
 
 import (
 	"fmt"
-	"pdf-staml/pkg"
+
+	"stamp-pdf/pkg"
 
 	"github.com/spf13/cobra"
 )
@@ -16,7 +17,6 @@ var stampInitCmd = &cobra.Command{
 		stampExecutor = cmd.PersistentFlags().Lookup("executor").Value.String()
 
 		img, err := pkg.AddTextOnImg(inFile, stampText, stampExecutor)
-
 		if err != nil {
 			return fmt.Errorf("problem with setting text on image %w", err)
 		}

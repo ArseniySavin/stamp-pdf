@@ -1,7 +1,7 @@
 package main
 
 import (
-	"pdf-staml/cmd/cli/commands"
+	"stamp-pdf/cmd/cli/commands"
 )
 
 func main() {
