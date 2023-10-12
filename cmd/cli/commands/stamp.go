@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"stamp-pdf/pkg"
 	"time"
+
+	"stamp-pdf/pkg"
 
 	"github.com/spf13/cobra"
 )
@@ -15,7 +16,6 @@ var stampCmd = &cobra.Command{
 	Short: "Set stamp",
 	Long:  `Command has injected stamp in pdf file`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-
 		page = cmd.PersistentFlags().Lookup("page").Value.String()
 		stampPosition = cmd.PersistentFlags().Lookup("pos").Value.String()
 
@@ -29,6 +29,8 @@ var stampCmd = &cobra.Command{
 		}
 
 		if stamp {
+
+			stampApplicant = cmd.PersistentFlags().Lookup("applicant").Value.String()
 			stampText = cmd.PersistentFlags().Lookup("text").Value.String()
 			stampExecutor = cmd.PersistentFlags().Lookup("executor").Value.String()
 
@@ -39,7 +41,7 @@ var stampCmd = &cobra.Command{
 
 			template := fmt.Sprintf("%s/%s", dir, "stamp_template.png")
 
-			img, err := pkg.AddTextOnImg(template, stampText, stampExecutor)
+			img, err := pkg.AddTextOnImg(template, stampText, stampExecutor, stampApplicant)
 			if err != nil {
 				return err
 			}

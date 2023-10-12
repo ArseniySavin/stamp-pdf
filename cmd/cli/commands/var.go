@@ -9,9 +9,10 @@ var (
 	page          string
 	stampPosition string
 
-	stamp         bool
-	stampText     string
-	stampExecutor string
+	stamp          bool
+	stampText      string
+	stampExecutor  string
+	stampApplicant string
 
 	rootCmd = &cobra.Command{
 		Use:   "stamp-pdf",

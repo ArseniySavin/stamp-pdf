@@ -20,11 +20,14 @@ help
 
 > creating stamp from your template.png with fill this
 
+- _Split string from `applicant` using character `\n` in the string_
+
 ```bash
 stamp-init --file $PWD/stamp_template.png \
 -o $PWD/stamp.png \
+--applicant "ТОО Компания \"Папа-Карло\" \
 --text "Присвоен УНВД 0/123/4567/8910 от 01.01.2023г." \
---executor "Выскочка Евгений Анатольевич (Сеньор помидор)"
+--executor "Сергиенко Валентин (Маэстро)"
 ```
 
 > pre-initial stamp created
@@ -38,12 +41,14 @@ stamp --file $PWD/in.pdf \
 
 > using a stamp template with the default name
 
-```stamp_template.png```
+- _Default name for template ```stamp_template.png```_
+- _Split string from `applicant` using character `\n` in the string_
 
 ```bash
 stamp --file $PWD/in.pdf \
 -o $PWD/out.pdf \
 --stamp true \
+--applicant "ТОО Компания \"Папа-Карло\"" \
 --text "Присвоен УНВД 0/123/4567/8910 от 01.01.2023г." \
---executor "Выскочка Евгений Анатольевич (Сеньор помидор)"
+--executor "Сергиенко Валентин (Маэстро)"
 ```
